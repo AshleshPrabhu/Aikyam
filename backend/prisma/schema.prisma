@@ -1,0 +1,47 @@
+
+generator client {
+  provider = "prisma-client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Vendor {
+  id         String   @id @default(cuid())
+  name       String
+  regionId   String
+  villageId  String
+  categories String[]
+  summary    String?
+  phone      String   @unique
+  isStay     Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  phone     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  assignments Assignment[]
+}
+
+model Assignment {
+  id          String   @id @default(cuid())
+  userId      String
+  regionId    String   
+  villageId   String   
+  startDate   DateTime
+  endDate     DateTime
+  tasks       Json
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+}
