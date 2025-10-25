@@ -1,0 +1,17 @@
+import { BrowserRouter as Router } from 'react-router-dom';
+import AppRoutes from './AppRoutes';
+import { CartProvider } from './contexts/CartContext';
+
+function App() {
+  return (
+    <CartProvider>
+      <Router>
+        <div className="App">
+          <AppRoutes />
+        </div>
+      </Router>
+    </CartProvider>
+  );
+}
+
+export default App;
