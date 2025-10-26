@@ -6,8 +6,7 @@ import villageRoutes from "./routes/villages.js";
 import vendorRoutes from "./routes/vendors.js";
 import userRoutes from "./routes/users.js";
 import assignmentRoutes from "./routes/assignment.js";
-import userRoutes from "./routes/users.js";
-import cors from 'cors';
+
 
 
 
