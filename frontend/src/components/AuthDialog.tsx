@@ -10,6 +10,7 @@ import {
   ArrowRight,
   Check
 } from 'lucide-react';
+import axios from 'axios';
 
 interface AuthDialogProps {
   isOpen: boolean;
@@ -51,23 +52,22 @@ const AuthDialog: React.FC<AuthDialogProps> = ({
     try {
       // TODO: Replace with actual API calls
       if (mode === 'signin') {
-        // const response = await fetch('/api/auth/signin', {
-        //   method: 'POST',
-        //   headers: { 'Content-Type': 'application/json' },
-        //   body: JSON.stringify({ phone: formData.phone, password: formData.password })
-        // });
+        const response = await axios.get(
+          'http://localhost:5000/api/users/' + formData.phone,
+        );
+        localStorage.setItem('user', JSON.stringify(response.data));
+
+        console.log('Signin response:', response);
         console.log('Signing in:', { phone: formData.phone, password: formData.password });
       } else {
-        // const response = await fetch('/api/auth/signup', {
-        //   method: 'POST',
-        //   headers: { 'Content-Type': 'application/json' },
-        //   body: JSON.stringify({
-        //     name: formData.name,
-        //     email: formData.email,
-        //     phone: formData.phone,
-        //     password: formData.password
-        //   })
-        // });
+        const response = await axios.post('http://localhost:5000/api/users', {
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          password: formData.password
+        });
+        console.log('Signup response:', response);
+        localStorage.setItem('user', JSON.stringify(response.data));
         console.log('Signing up:', {
           name: formData.name,
           email: formData.email,
@@ -76,10 +76,7 @@ const AuthDialog: React.FC<AuthDialogProps> = ({
         });
       }
 
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
       
-      // Close dialog on success
       onClose();
     } catch (error) {
       console.error('Authentication error:', error);

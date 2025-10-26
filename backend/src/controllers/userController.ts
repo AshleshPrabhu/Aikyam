@@ -1,11 +1,12 @@
 import type { Request, Response } from 'express';
 import prisma from '../utils/prisma.js';
+import bcrypt from 'bcrypt';
 
 export const createUser = async (req: Request, res: Response) => {
     try {
-        const { name, email, phone } = req.body;
+        const { name, email, phone,password } = req.body;
         const user = await prisma.user.create({
-        data: { name, email, phone },
+        data: { name, email, phone,password: await bcrypt.hash(password, 10) },
         include: { assignments: true },
         });
         res.status(201).json(user);
@@ -25,14 +26,14 @@ export const getAllUsers = async (req: Request, res: Response) => {
     }
 };
 
-    export const getUserById = async (req: Request, res: Response) => {
+    export const getUserByPhone = async (req: Request, res: Response) => {
     try {
-        const { id } = req.params;
-        if (!id) {
-        return res.status(400).json({ error: 'User ID is required' });
+        const { phone } = req.params;
+        if (!phone) {
+        return res.status(400).json({ error: 'User phone is required' });
         }
         const user = await prisma.user.findUnique({
-        where: { id },
+        where: { phone },
         include: { assignments: true },
         });
         if (!user) {
@@ -46,14 +47,13 @@ export const getAllUsers = async (req: Request, res: Response) => {
 
 export const updateUser = async (req: Request, res: Response) => {
     try {
-        const { id } = req.params;
-        const { name, email, phone } = req.body;
-        if (!id) {
-        return res.status(400).json({ error: 'User ID is required' });
+        const { name, email, phone,password } = req.body;
+        if (!phone) {
+        return res.status(400).json({ error: 'User phone is required' });
         }
         const user = await prisma.user.update({
-        where: { id: id! },
-        data: { name, email, phone },
+        where: { phone: phone! },
+        data: { name, email, phone,password },
         include: { assignments: true },
         });
         res.json(user);
@@ -68,13 +68,13 @@ export const updateUser = async (req: Request, res: Response) => {
 };
 
 export const deleteUser = async (req: Request, res: Response) => {
-  try {
-        const { id } = req.params;
-        if (!id) {
-        return res.status(400).json({ error: 'User ID is required' });
+    try {
+        const { phone } = req.params;
+        if (!phone) {
+        return res.status(400).json({ error: 'User phone is required' });
         }
         await prisma.user.delete({
-        where: { id: id! },
+        where: { phone: phone! },
         });
         res.status(204).send();
     } catch (error) {
