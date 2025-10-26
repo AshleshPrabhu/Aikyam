@@ -11,75 +11,8 @@ import {
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import RegionCard from '../../components/RegionCard';
-
-// Types for regions
-interface Region {
-  id: number;
-  name: string;
-  image: string;
-  state: string;
-  villageCount: number;
-  description?: string;
-  famousCrafts?: string[];
-}
-
-// Sample regions data - this would come from API later
-const mockRegions: Region[] = [
-  {
-    id: 1,
-    name: 'Mysore Region',
-    image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
-    state: 'Karnataka',
-    villageCount: 15,
-    description: 'Famous for sandalwood crafts and silk weaving',
-    famousCrafts: ['Sandalwood Carving', 'Mysore Silk', 'Inlay Work']
-  },
-  {
-    id: 2,
-    name: 'Jaipur Region',
-    image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
-    state: 'Rajasthan',
-    villageCount: 23,
-    description: 'Known for blue pottery and block printing',
-    famousCrafts: ['Blue Pottery', 'Block Printing', 'Jewelry Making']
-  },
-  {
-    id: 3,
-    name: 'Murshidabad Region',
-    image: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
-    state: 'West Bengal',
-    villageCount: 8,
-    description: 'Traditional silk weaving and handloom textiles',
-    famousCrafts: ['Silk Weaving', 'Handloom', 'Embroidery']
-  },
-  {
-    id: 4,
-    name: 'Channapatna Region',
-    image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
-    state: 'Karnataka',
-    villageCount: 12,
-    description: 'World famous for wooden toys and lacquerware',
-    famousCrafts: ['Wooden Toys', 'Lacquerware', 'Turned Wood']
-  },
-  {
-    id: 5,
-    name: 'Madhubani Region',
-    image: 'https://images.unsplash.com/photo-1578321272176-b7bbc0679853?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
-    state: 'Bihar',
-    villageCount: 18,
-    description: 'Vibrant Madhubani paintings and folk art',
-    famousCrafts: ['Madhubani Painting', 'Folk Art', 'Wall Painting']
-  },
-  {
-    id: 6,
-    name: 'Kutch Region',
-    image: 'https://images.unsplash.com/photo-1610832958506-aa56368176cf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
-    state: 'Gujarat',
-    villageCount: 25,
-    description: 'Intricate embroidery and mirror work',
-    famousCrafts: ['Kutch Embroidery', 'Mirror Work', 'Bandhani']
-  }
-];
+import regionService from '../../services/regionService';
+import type { Region } from '../../services/regionService';
 
 // Indian states for filter
 const indianStates = [
@@ -115,17 +48,15 @@ const Regions: React.FC = () => {
     const fetchRegions = async () => {
       try {
         setLoading(true);
-        // TODO: Replace with actual API call
-        // const response = await fetch('/api/regions');
-        // const data = await response.json();
-        
-        // Using mock data for now
-        await new Promise(resolve => setTimeout(resolve, 500)); // Simulate loading
-        setRegions(mockRegions);
-        setFilteredRegions(mockRegions);
-        setLoading(false);
+        setError(null);
+        const data = await regionService.getAllRegions();
+        setRegions(data);
+        setFilteredRegions(data);
       } catch (err) {
-        setError('Failed to fetch regions');
+        console.error('Error fetching regions:', err);
+        setError('Failed to fetch regions. Please try again later.');
+        setLoading(false);
+      } finally {
         setLoading(false);
       }
     };
@@ -141,7 +72,7 @@ const Regions: React.FC = () => {
     if (searchQuery) {
       filtered = filtered.filter(region =>
         region.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        region.state.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (region.state && region.state.toLowerCase().includes(searchQuery.toLowerCase())) ||
         region.famousCrafts?.some(craft => 
           craft.toLowerCase().includes(searchQuery.toLowerCase())
         )
@@ -159,10 +90,10 @@ const Regions: React.FC = () => {
         filtered.sort((a, b) => a.name.localeCompare(b.name));
         break;
       case 'villages':
-        filtered.sort((a, b) => b.villageCount - a.villageCount);
+        filtered.sort((a, b) => (b.villageCount ?? 0) - (a.villageCount ?? 0));
         break;
       case 'state':
-        filtered.sort((a, b) => a.state.localeCompare(b.state));
+        filtered.sort((a, b) => (a.state ?? '').localeCompare(b.state ?? ''));
         break;
       default:
         break;
@@ -245,7 +176,7 @@ const Regions: React.FC = () => {
               </div>
               <div className="flex items-center space-x-2">
                 <div className="w-2 h-2 bg-brown-600 rounded-full"></div>
-                <span>{filteredRegions.reduce((sum, region) => sum + region.villageCount, 0)} Villages</span>
+                <span>{filteredRegions.reduce((sum, region) => sum + (region.villageCount ?? 0), 0)} Villages</span>
               </div>
             </div>
           </div>

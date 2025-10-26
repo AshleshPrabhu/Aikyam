@@ -3,14 +3,17 @@ import { Link } from 'react-router-dom';
 import { Phone, MapPin, Eye } from 'lucide-react';
 
 interface VillagerCardProps {
-  id: number;
+  id: string | number;
   name: string;
-  village: string;
-  district: string;
-  photo: string;
-  description: string;
-  mobile: string;
+  village?: string;
+  district?: string;
+  photo?: string;
+  description?: string;
+  mobile?: string;
+  phone?: string;
   craftsSpecialty?: string;
+  categories?: string[];
+  summary?: string;
 }
 
 const VillagerCard: React.FC<VillagerCardProps> = ({ 
@@ -21,11 +24,21 @@ const VillagerCard: React.FC<VillagerCardProps> = ({
   photo,
   description,
   mobile,
-  craftsSpecialty
+  phone,
+  craftsSpecialty,
+  categories,
+  summary
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [showMobile, setShowMobile] = useState(false);
+
+  // Use phone or mobile (backend sends 'phone', mock data uses 'mobile')
+  const contactNumber = phone || mobile;
+  // Use description or summary (backend sends 'summary', mock data uses 'description')
+  const displayDescription = description || summary;
+  // Use categories or craftsSpecialty
+  const crafts = categories?.join(', ') || craftsSpecialty;
 
   const handleContactClick = () => {
     setShowMobile(!showMobile);
@@ -72,16 +85,16 @@ const VillagerCard: React.FC<VillagerCardProps> = ({
               onClick={handleContactClick}
               className="w-full py-2 rounded-lg font-body font-semibold transition-all duration-200 shadow-lg backdrop-blur-sm bg-brown-800 text-white hover:bg-brown-900"
             >
-              {showMobile ? mobile : 'CONTACT HIM'}
+              {showMobile ? contactNumber : 'CONTACT HIM'}
             </button>
           </div>
         </div>
 
         {/* Specialty Badge */}
-        {craftsSpecialty && (
+        {crafts && (
           <div className="absolute top-3 left-3">
             <span className="bg-white/90 backdrop-blur-sm text-brown-800 text-xs font-body font-semibold px-3 py-1 rounded-full shadow-md">
-              {craftsSpecialty}
+              {crafts}
             </span>
           </div>
         )}
@@ -100,7 +113,7 @@ const VillagerCard: React.FC<VillagerCardProps> = ({
           <div className="flex items-center space-x-1">
             <MapPin className="w-4 h-4 text-brown-500" />
             <p className="font-body text-sm text-brown-600">
-              {village}, {district}
+              {village ? `${village}${district ? `, ${district}` : ''}` : 'Location'}
             </p>
           </div>
         </div>
@@ -109,7 +122,7 @@ const VillagerCard: React.FC<VillagerCardProps> = ({
         <div className="space-y-2">
           <h4 className="font-body font-semibold text-brown-800 text-sm">Arts & Crafts:</h4>
           <p className="font-body text-brown-700 text-sm leading-relaxed line-clamp-3">
-            {description}
+            {displayDescription || 'No description available'}
           </p>
         </div>
         
@@ -124,7 +137,7 @@ const VillagerCard: React.FC<VillagerCardProps> = ({
             }`}
           >
             <Phone className="w-4 h-4" />
-            <span>{showMobile ? mobile : 'Contact Him'}</span>
+            <span>{showMobile ? contactNumber : 'Contact Him'}</span>
           </button>
         </div>
       </div>

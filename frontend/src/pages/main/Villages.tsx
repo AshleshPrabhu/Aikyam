@@ -13,146 +13,9 @@ import {
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import VillageCard from '../../components/VillageCard';
-
-// Types for villages
-interface Village {
-  id: number;
-  name: string;
-  image: string;
-  description: string;
-  artisanCount: number;
-  region: string;
-  regionId: number;
-  famousCrafts?: string[];
-  established?: string;
-}
-
-// Sample villages data - this would come from API later
-const mockVillagesByRegion: { [key: number]: Village[] } = {
-  1: [ // Mysore Region
-    {
-      id: 1,
-      name: 'Channapatna',
-      image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
-      description: 'World famous for traditional wooden toys and lacquerware. Artisans use indigenous techniques passed down through generations to create colorful toys.',
-      artisanCount: 45,
-      region: 'Mysore Region',
-      regionId: 1,
-      famousCrafts: ['Wooden Toys', 'Lacquerware'],
-      established: '16th Century'
-    },
-    {
-      id: 2,
-      name: 'Mysore City',
-      image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
-      description: 'Renowned for Mysore silk sarees and sandalwood products. The silk weaving tradition here produces some of India finest textiles.',
-      artisanCount: 67,
-      region: 'Mysore Region',
-      regionId: 1,
-      famousCrafts: ['Mysore Silk', 'Sandalwood Carving'],
-      established: '14th Century'
-    }
-  ],
-  2: [ // Jaipur Region
-    {
-      id: 3,
-      name: 'Sanganer',
-      image: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
-      description: 'Famous for block printing and handmade paper. Traditional techniques create intricate patterns on fabrics using natural dyes.',
-      artisanCount: 89,
-      region: 'Jaipur Region',
-      regionId: 2,
-      famousCrafts: ['Block Printing', 'Handmade Paper'],
-      established: '17th Century'
-    },
-    {
-      id: 4,
-      name: 'Bagru',
-      image: 'https://images.unsplash.com/photo-1610832958506-aa56368176cf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
-      description: 'Known for traditional fabric dyeing and printing. Uses natural indigo and other plant-based dyes for sustainable textile production.',
-      artisanCount: 56,
-      region: 'Jaipur Region',
-      regionId: 2,
-      famousCrafts: ['Natural Dyeing', 'Traditional Printing'],
-      established: '15th Century'
-    },
-    {
-      id: 5,
-      name: 'Khurja',
-      image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
-      description: 'Renowned for blue pottery and ceramic art. Master potters create exquisite pieces using traditional Persian techniques brought to India.',
-      artisanCount: 73,
-      region: 'Jaipur Region',
-      regionId: 2,
-      famousCrafts: ['Blue Pottery', 'Ceramic Art', 'Glazing'],
-      established: '18th Century'
-    },
-    {
-      id: 6,
-      name: 'Makrana',
-      image: 'https://images.unsplash.com/photo-1610832958506-aa56368176cf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
-      description: 'Famous for marble carving and stone sculpture. The same marble used in Taj Mahal comes from here, and artisans create beautiful decorative pieces.',
-      artisanCount: 42,
-      region: 'Jaipur Region',
-      regionId: 2,
-      famousCrafts: ['Marble Carving', 'Stone Sculpture', 'Inlay Work'],
-      established: '16th Century'
-    }
-  ],
-  4: [ // Channapatna Region
-    {
-      id: 7,
-      name: 'Channapatna Town',
-      image: 'https://images.unsplash.com/photo-1595225476474-87563907a212?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
-      description: 'The heartland of wooden toy making in India. Every household here is connected to the craft of creating colorful wooden toys using traditional lacquering techniques.',
-      artisanCount: 156,
-      region: 'Channapatna Region',
-      regionId: 4,
-      famousCrafts: ['Wooden Toys', 'Lacquerware', 'Natural Dyes'],
-      established: '18th Century'
-    },
-    {
-      id: 8,
-      name: 'Ramnagara',
-      image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
-      description: 'Known for turned wood products and decorative items. Artisans specialize in creating intricate designs on wood using traditional turning lathes.',
-      artisanCount: 78,
-      region: 'Channapatna Region',
-      regionId: 4,
-      famousCrafts: ['Turned Wood', 'Decorative Items', 'Wood Carving'],
-      established: '19th Century'
-    },
-    {
-      id: 9,
-      name: 'Harohalli',
-      image: 'https://images.unsplash.com/photo-1595225476474-87563907a212?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
-      description: 'Specializes in eco-friendly wooden furniture and utility items. Artisans use sustainable practices and natural finishes for all their creations.',
-      artisanCount: 34,
-      region: 'Channapatna Region',
-      regionId: 4,
-      famousCrafts: ['Eco Furniture', 'Utility Items', 'Natural Finishes'],
-      established: '20th Century'
-    },
-    {
-      id: 10,
-      name: 'Kanakapura',
-      image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
-      description: 'Famous for miniature wooden sculptures and artistic carvings. The village produces some of the finest detailed work in the entire region.',
-      artisanCount: 67,
-      region: 'Channapatna Region',
-      regionId: 4,
-      famousCrafts: ['Miniature Sculptures', 'Artistic Carving', 'Detail Work'],
-      established: '17th Century'
-    }
-  ]
-};
-
-// Mock region data for breadcrumb
-const mockRegions: { [key: number]: { name: string; state: string } } = {
-  1: { name: 'Mysore Region', state: 'Karnataka' },
-  2: { name: 'Jaipur Region', state: 'Rajasthan' },
-  4: { name: 'Channapatna Region', state: 'Karnataka' }
-};
+import villageService from '../../services/villageService';
+import regionService from '../../services/regionService';
+import type { Village } from '../../services/villageService';
 
 const sortOptions = [
   { value: 'name', label: 'Name A-Z' },
@@ -179,24 +42,28 @@ const Villages: React.FC = () => {
     const fetchVillages = async () => {
       try {
         setLoading(true);
-        const id = parseInt(regionId || '1');
+        setError(null);
         
-        // TODO: Replace with actual API call
-        // const response = await fetch(`/api/regions/${id}/villages`);
-        // const data = await response.json();
+        if (!regionId) {
+          setError('Region ID is required');
+          setLoading(false);
+          return;
+        }
         
-        // Using mock data for now
-        await new Promise(resolve => setTimeout(resolve, 500)); // Simulate loading
+        // Fetch region details
+        const region = await regionService.getRegionById(regionId);
+        setCurrentRegion({ name: region.name, state: region.state || 'India' });
         
-        const regionVillages = mockVillagesByRegion[id] || [];
-        const region = mockRegions[id] || { name: 'Unknown Region', state: 'India' };
+        // Fetch all villages and filter by regionId
+        const allVillages = await villageService.getAllVillages();
+        const regionVillages = allVillages.filter(v => v.regionId === regionId);
         
         setVillages(regionVillages);
         setFilteredVillages(regionVillages);
-        setCurrentRegion(region);
         setLoading(false);
       } catch (err) {
-        setError('Failed to fetch villages');
+        console.error('Error fetching villages:', err);
+        setError('Failed to fetch villages. Please try again later.');
         setLoading(false);
       }
     };
@@ -214,10 +81,7 @@ const Villages: React.FC = () => {
     if (searchQuery) {
       filtered = filtered.filter(village =>
         village.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        village.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        village.famousCrafts?.some(craft => 
-          craft.toLowerCase().includes(searchQuery.toLowerCase())
-        )
+        (village.description && village.description.toLowerCase().includes(searchQuery.toLowerCase()))
       );
     }
 
@@ -227,14 +91,10 @@ const Villages: React.FC = () => {
         filtered.sort((a, b) => a.name.localeCompare(b.name));
         break;
       case 'artisans':
-        filtered.sort((a, b) => b.artisanCount - a.artisanCount);
+        // No artisanCount in API, keep original order
         break;
       case 'established':
-        filtered.sort((a, b) => {
-          const aYear = a.established?.match(/\d+/)?.[0] || '0';
-          const bYear = b.established?.match(/\d+/)?.[0] || '0';
-          return parseInt(aYear) - parseInt(bYear);
-        });
+        // No established field in API, keep original order
         break;
       default:
         break;
@@ -333,10 +193,6 @@ const Villages: React.FC = () => {
               <div className="flex items-center space-x-2">
                 <div className="w-2 h-2 bg-primary-500 rounded-full"></div>
                 <span>{filteredVillages.length} Villages</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-brown-600 rounded-full"></div>
-                <span>{filteredVillages.reduce((sum, village) => sum + village.artisanCount, 0)} Artisans</span>
               </div>
             </div>
           </div>
@@ -502,8 +358,6 @@ const Villages: React.FC = () => {
                     name={village.name}
                     image={village.image}
                     description={village.description}
-                    artisanCount={village.artisanCount}
-                    region={village.region}
                   />
                 ))}
               </div>

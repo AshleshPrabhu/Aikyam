@@ -6,17 +6,21 @@ import {
   Calendar, 
   ArrowRight,
   Download,
-  Clock
+  Clock,
+  Loader2
 } from 'lucide-react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import vendorService from '../../services/vendorService';
+import villageService from '../../services/villageService';
+import type { Vendor } from '../../services/vendorService';
 
 // Types
 interface Villager {
-  id: number;
+  id: string;
   name: string;
-  craftsSpecialty: string;
-  experience: string;
+  categories: string[];
+  summary?: string;
 }
 
 interface RoadmapStep {
@@ -28,35 +32,7 @@ interface RoadmapStep {
   kpi: string;
 }
 
-// Mock villagers data (same as in Villagers.tsx)
-const mockVillagersByVillage: { [key: number]: Villager[] } = {
-  7: [ // Channapatna Town
-    { id: 7, name: 'Manjunath H K', craftsSpecialty: 'Traditional Wooden Toys', experience: '35+ years' },
-    { id: 8, name: 'Roopa Devi', craftsSpecialty: 'Painted Jewelry', experience: '28+ years' },
-    { id: 9, name: 'Gagan Kumar', craftsSpecialty: 'Custom Toys', experience: '12+ years' },
-    { id: 10, name: 'Sharada Amma', craftsSpecialty: 'Storytelling Dolls', experience: '45+ years' }
-  ],
-  8: [ // Ramnagara
-    { id: 11, name: 'Srinivasa Murthy', craftsSpecialty: 'Wood Turning', experience: '30+ years' },
-    { id: 12, name: 'Kavitha Rani', craftsSpecialty: 'Contemporary Furniture', experience: '15+ years' }
-  ],
-  5: [ // Khurja
-    { id: 13, name: 'Mahesh Sharma', craftsSpecialty: 'Blue Pottery', experience: '32+ years' },
-    { id: 14, name: 'Sunita Sharma', craftsSpecialty: 'Contemporary Ceramics', experience: '18+ years' }
-  ],
-  4: [ // Bagru
-    { id: 15, name: 'Ganesh Chippa', craftsSpecialty: 'Natural Dyeing', experience: '26+ years' },
-    { id: 16, name: 'Kamala Devi Chippa', craftsSpecialty: 'Traditional Printing', experience: '22+ years' }
-  ]
-};
-
-const mockVillages: { [key: number]: { name: string; region: string } } = {
-  7: { name: 'Channapatna Town', region: 'Channapatna Region' },
-  8: { name: 'Ramnagara', region: 'Channapatna Region' },
-  5: { name: 'Khurja', region: 'Jaipur Region' },
-  4: { name: 'Bagru', region: 'Jaipur Region' }
-};
-
+// Dummy roadmap data
 const dummyRoadmap: RoadmapStep[] = [
   {
     week: 1,
@@ -136,22 +112,53 @@ const dummyRoadmap: RoadmapStep[] = [
 const Roadmap: React.FC = () => {
   const { villageId } = useParams<{ villageId: string }>();
   const [currentStep, setCurrentStep] = useState(0);
-  const [selectedArtisans, setSelectedArtisans] = useState<number[]>([]);
+  const [selectedArtisans, setSelectedArtisans] = useState<string[]>([]);
   const [selectedPeriod, setSelectedPeriod] = useState<string>('');
   const [showQuestions, setShowQuestions] = useState(true);
   const [villagers, setVillagers] = useState<Villager[]>([]);
-  const [village, setVillage] = useState<{ name: string; region: string } | null>(null);
+  const [village, setVillage] = useState<{ name: string; regionId: string } | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const id = parseInt(villageId || '7');
-    const villageVillagers = mockVillagersByVillage[id] || [];
-    const villageInfo = mockVillages[id] || { name: 'Unknown Village', region: 'Unknown Region' };
-    
-    setVillagers(villageVillagers);
-    setVillage(villageInfo);
+    const fetchVillageData = async () => {
+      try {
+        setLoading(true);
+        
+        if (!villageId) {
+          setLoading(false);
+          return;
+        }
+
+        // Fetch village details
+        const villageData = await villageService.getVillageById(villageId);
+        setVillage({ name: villageData.name, regionId: villageData.regionId });
+
+        // Fetch all vendors and filter by villageId
+        const allVendors = await vendorService.getAllVendors();
+        const villageVendors = allVendors.filter((v: Vendor) => v.villageId === villageId);
+        
+        // Transform vendors to match Villager interface
+        const transformedVillagers: Villager[] = villageVendors.map((v: Vendor) => ({
+          id: v.id,
+          name: v.name,
+          categories: v.categories,
+          summary: v.summary
+        }));
+        
+        setVillagers(transformedVillagers);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching village data:', error);
+        setLoading(false);
+      }
+    };
+
+    if (villageId) {
+      fetchVillageData();
+    }
   }, [villageId]);
 
-  const handleArtisanToggle = (artisanId: number) => {
+  const handleArtisanToggle = (artisanId: string) => {
     setSelectedArtisans(prev => 
       prev.includes(artisanId) 
         ? prev.filter(id => id !== artisanId)
@@ -180,12 +187,10 @@ const Roadmap: React.FC = () => {
           <div className="flex items-center space-x-2 text-sm font-body text-brown-600 mb-8">
             <Link to="/regions" className="hover:text-brown-800 transition-colors">Regions</Link>
             <span>→</span>
-            <Link to={`/region/${village?.region === 'Channapatna Region' ? '4' : '2'}/villages`} className="hover:text-brown-800 transition-colors">
-              {village?.region}
-            </Link>
+            <span className="text-brown-600">{village?.name}</span>
             <span>→</span>
             <Link to={`/village/${villageId}/villagers`} className="hover:text-brown-800 transition-colors">
-              {village?.name}
+              Villagers
             </Link>
             <span>→</span>
             <span className="text-brown-800 font-semibold">Collaboration Roadmap</span>
@@ -203,6 +208,18 @@ const Roadmap: React.FC = () => {
               </p>
             </div>
 
+            {/* Loading State */}
+            {loading ? (
+              <div className="flex items-center justify-center py-12">
+                <Loader2 className="w-8 h-8 text-brown-600 animate-spin mr-2" />
+                <span className="font-body text-brown-600">Loading artisans...</span>
+              </div>
+            ) : villagers.length === 0 ? (
+              <div className="bg-white rounded-xl shadow-lg p-8 text-center">
+                <p className="font-body text-brown-600">No artisans found in this village yet.</p>
+              </div>
+            ) : (
+              <>
             {/* Questions Card */}
             <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
               {/* Question 1: Select Artisans */}
@@ -230,7 +247,7 @@ const Roadmap: React.FC = () => {
                       <div className="ml-3">
                         <p className="font-body font-semibold text-brown-800">{villager.name}</p>
                         <p className="font-body text-sm text-brown-600">
-                          {villager.craftsSpecialty} • {villager.experience}
+                          {villager.categories.join(', ')} {villager.summary ? '•' : ''} {villager.summary ? villager.summary.substring(0, 50) + '...' : ''}
                         </p>
                       </div>
                     </label>
@@ -280,6 +297,8 @@ const Roadmap: React.FC = () => {
                 </button>
               </div>
             </div>
+              </>
+            )}
           </div>
         </div>
 
@@ -297,12 +316,10 @@ const Roadmap: React.FC = () => {
         <div className="flex items-center space-x-2 text-sm font-body text-brown-600 mb-8">
           <Link to="/regions" className="hover:text-brown-800 transition-colors">Regions</Link>
           <span>→</span>
-          <Link to={`/region/${village?.region === 'Channapatna Region' ? '4' : '2'}/villages`} className="hover:text-brown-800 transition-colors">
-            {village?.region}
-          </Link>
+          <span className="text-brown-600">{village?.name}</span>
           <span>→</span>
           <Link to={`/village/${villageId}/villagers`} className="hover:text-brown-800 transition-colors">
-            {village?.name}
+            Villagers
           </Link>
           <span>→</span>
           <span className="text-brown-800 font-semibold">Collaboration Roadmap</span>

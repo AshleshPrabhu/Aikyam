@@ -22,7 +22,7 @@ const config: runtime.GetPrismaClientConfig = {
       "value": "prisma-client"
     },
     "output": {
-      "value": "C:\\Users\\Ashlesh Prabhu\\aikyam\\backend\\src\\generated",
+      "value": "C:\\Users\\vidit\\Skills\\Aikyam\\backend\\src\\generated",
       "fromEnvVar": null
     },
     "config": {
@@ -36,7 +36,7 @@ const config: runtime.GetPrismaClientConfig = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\Ashlesh Prabhu\\aikyam\\backend\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\vidit\\Skills\\Aikyam\\backend\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativePath": "../../prisma",

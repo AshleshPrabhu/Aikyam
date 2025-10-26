@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import { MapPin } from 'lucide-react';
 
 interface RegionCardProps {
-  id: number;
+  id: string | number;
   name: string;
-  image: string;
+  image?: string;
   villageCount?: number;
 }
 
@@ -32,14 +32,16 @@ const RegionCard: React.FC<RegionCardProps> = ({
             <div className="absolute inset-0 bg-linear-to-br from-cream-200 to-primary-200/20 animate-pulse"></div>
           )}
           
-          <img 
-            src={image} 
-            alt={`Crafts from ${name}`}
-            className={`w-full h-full object-cover transition-all duration-500 ${
-              isHovered ? 'scale-110' : 'scale-100'
-            } ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
-            onLoad={() => setImageLoaded(true)}
-          />
+          {image && (
+            <img 
+              src={image} 
+              alt={`Crafts from ${name}`}
+              className={`w-full h-full object-cover transition-all duration-500 ${
+                isHovered ? 'scale-110' : 'scale-100'
+              } ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+              onLoad={() => setImageLoaded(true)}
+            />
+          )}
           
           {/* Overlay */}
           <div className={`absolute inset-0 bg-black/10 transition-opacity duration-300 ${

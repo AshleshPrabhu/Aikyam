@@ -1,17 +1,29 @@
 import express from "express";
 import dotenv from "dotenv";
+import cors from "cors";
 import regionRoutes from "./routes/regions.js";
 import villageRoutes from "./routes/villages.js";
-import vendorRoutes from "./routes/vendors.js"
+import vendorRoutes from "./routes/vendors.js";
+import userRoutes from "./routes/users.js";
 import assignmentRoutes from "./routes/assignment.js";
 
 dotenv.config();
 const app = express();
+
+// Middleware
 app.use(express.json());
+app.use(cors({
+  origin: ["http://localhost:5173", "http://localhost:3000"],
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
+
 // Routes
 app.use("/api/regions", regionRoutes);
 app.use("/api/villages", villageRoutes);
 app.use("/api/vendors", vendorRoutes);
+app.use("/api/users", userRoutes);
 app.use("/api/assignments", assignmentRoutes);
 
 const PORT = process.env.PORT || 5000;
