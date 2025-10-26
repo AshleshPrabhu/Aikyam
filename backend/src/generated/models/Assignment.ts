@@ -210,6 +210,7 @@ export type AssignmentWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Assignment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Assignment"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  village?: Prisma.XOR<Prisma.VillageScalarRelationFilter, Prisma.VillageWhereInput>
 }
 
 export type AssignmentOrderByWithRelationInput = {
@@ -223,6 +224,7 @@ export type AssignmentOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
+  village?: Prisma.VillageOrderByWithRelationInput
 }
 
 export type AssignmentWhereUniqueInput = Prisma.AtLeast<{
@@ -239,6 +241,7 @@ export type AssignmentWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Assignment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Assignment"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  village?: Prisma.XOR<Prisma.VillageScalarRelationFilter, Prisma.VillageWhereInput>
 }, "id">
 
 export type AssignmentOrderByWithAggregationInput = {
@@ -274,13 +277,13 @@ export type AssignmentScalarWhereWithAggregatesInput = {
 export type AssignmentCreateInput = {
   id?: string
   regionId: string
-  villageId: string
   startDate: Date | string
   endDate: Date | string
   tasks: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutAssignmentsInput
+  village: Prisma.VillageCreateNestedOneWithoutAssignmentsInput
 }
 
 export type AssignmentUncheckedCreateInput = {
@@ -298,13 +301,13 @@ export type AssignmentUncheckedCreateInput = {
 export type AssignmentUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   regionId?: Prisma.StringFieldUpdateOperationsInput | string
-  villageId?: Prisma.StringFieldUpdateOperationsInput | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutAssignmentsNestedInput
+  village?: Prisma.VillageUpdateOneRequiredWithoutAssignmentsNestedInput
 }
 
 export type AssignmentUncheckedUpdateInput = {
@@ -334,7 +337,6 @@ export type AssignmentCreateManyInput = {
 export type AssignmentUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   regionId?: Prisma.StringFieldUpdateOperationsInput | string
-  villageId?: Prisma.StringFieldUpdateOperationsInput | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -398,6 +400,48 @@ export type AssignmentMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
+export type AssignmentCreateNestedManyWithoutVillageInput = {
+  create?: Prisma.XOR<Prisma.AssignmentCreateWithoutVillageInput, Prisma.AssignmentUncheckedCreateWithoutVillageInput> | Prisma.AssignmentCreateWithoutVillageInput[] | Prisma.AssignmentUncheckedCreateWithoutVillageInput[]
+  connectOrCreate?: Prisma.AssignmentCreateOrConnectWithoutVillageInput | Prisma.AssignmentCreateOrConnectWithoutVillageInput[]
+  createMany?: Prisma.AssignmentCreateManyVillageInputEnvelope
+  connect?: Prisma.AssignmentWhereUniqueInput | Prisma.AssignmentWhereUniqueInput[]
+}
+
+export type AssignmentUncheckedCreateNestedManyWithoutVillageInput = {
+  create?: Prisma.XOR<Prisma.AssignmentCreateWithoutVillageInput, Prisma.AssignmentUncheckedCreateWithoutVillageInput> | Prisma.AssignmentCreateWithoutVillageInput[] | Prisma.AssignmentUncheckedCreateWithoutVillageInput[]
+  connectOrCreate?: Prisma.AssignmentCreateOrConnectWithoutVillageInput | Prisma.AssignmentCreateOrConnectWithoutVillageInput[]
+  createMany?: Prisma.AssignmentCreateManyVillageInputEnvelope
+  connect?: Prisma.AssignmentWhereUniqueInput | Prisma.AssignmentWhereUniqueInput[]
+}
+
+export type AssignmentUpdateManyWithoutVillageNestedInput = {
+  create?: Prisma.XOR<Prisma.AssignmentCreateWithoutVillageInput, Prisma.AssignmentUncheckedCreateWithoutVillageInput> | Prisma.AssignmentCreateWithoutVillageInput[] | Prisma.AssignmentUncheckedCreateWithoutVillageInput[]
+  connectOrCreate?: Prisma.AssignmentCreateOrConnectWithoutVillageInput | Prisma.AssignmentCreateOrConnectWithoutVillageInput[]
+  upsert?: Prisma.AssignmentUpsertWithWhereUniqueWithoutVillageInput | Prisma.AssignmentUpsertWithWhereUniqueWithoutVillageInput[]
+  createMany?: Prisma.AssignmentCreateManyVillageInputEnvelope
+  set?: Prisma.AssignmentWhereUniqueInput | Prisma.AssignmentWhereUniqueInput[]
+  disconnect?: Prisma.AssignmentWhereUniqueInput | Prisma.AssignmentWhereUniqueInput[]
+  delete?: Prisma.AssignmentWhereUniqueInput | Prisma.AssignmentWhereUniqueInput[]
+  connect?: Prisma.AssignmentWhereUniqueInput | Prisma.AssignmentWhereUniqueInput[]
+  update?: Prisma.AssignmentUpdateWithWhereUniqueWithoutVillageInput | Prisma.AssignmentUpdateWithWhereUniqueWithoutVillageInput[]
+  updateMany?: Prisma.AssignmentUpdateManyWithWhereWithoutVillageInput | Prisma.AssignmentUpdateManyWithWhereWithoutVillageInput[]
+  deleteMany?: Prisma.AssignmentScalarWhereInput | Prisma.AssignmentScalarWhereInput[]
+}
+
+export type AssignmentUncheckedUpdateManyWithoutVillageNestedInput = {
+  create?: Prisma.XOR<Prisma.AssignmentCreateWithoutVillageInput, Prisma.AssignmentUncheckedCreateWithoutVillageInput> | Prisma.AssignmentCreateWithoutVillageInput[] | Prisma.AssignmentUncheckedCreateWithoutVillageInput[]
+  connectOrCreate?: Prisma.AssignmentCreateOrConnectWithoutVillageInput | Prisma.AssignmentCreateOrConnectWithoutVillageInput[]
+  upsert?: Prisma.AssignmentUpsertWithWhereUniqueWithoutVillageInput | Prisma.AssignmentUpsertWithWhereUniqueWithoutVillageInput[]
+  createMany?: Prisma.AssignmentCreateManyVillageInputEnvelope
+  set?: Prisma.AssignmentWhereUniqueInput | Prisma.AssignmentWhereUniqueInput[]
+  disconnect?: Prisma.AssignmentWhereUniqueInput | Prisma.AssignmentWhereUniqueInput[]
+  delete?: Prisma.AssignmentWhereUniqueInput | Prisma.AssignmentWhereUniqueInput[]
+  connect?: Prisma.AssignmentWhereUniqueInput | Prisma.AssignmentWhereUniqueInput[]
+  update?: Prisma.AssignmentUpdateWithWhereUniqueWithoutVillageInput | Prisma.AssignmentUpdateWithWhereUniqueWithoutVillageInput[]
+  updateMany?: Prisma.AssignmentUpdateManyWithWhereWithoutVillageInput | Prisma.AssignmentUpdateManyWithWhereWithoutVillageInput[]
+  deleteMany?: Prisma.AssignmentScalarWhereInput | Prisma.AssignmentScalarWhereInput[]
+}
+
 export type AssignmentCreateNestedManyWithoutUserInput = {
   create?: Prisma.XOR<Prisma.AssignmentCreateWithoutUserInput, Prisma.AssignmentUncheckedCreateWithoutUserInput> | Prisma.AssignmentCreateWithoutUserInput[] | Prisma.AssignmentUncheckedCreateWithoutUserInput[]
   connectOrCreate?: Prisma.AssignmentCreateOrConnectWithoutUserInput | Prisma.AssignmentCreateOrConnectWithoutUserInput[]
@@ -440,15 +484,78 @@ export type AssignmentUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.AssignmentScalarWhereInput | Prisma.AssignmentScalarWhereInput[]
 }
 
-export type AssignmentCreateWithoutUserInput = {
+export type AssignmentCreateWithoutVillageInput = {
   id?: string
   regionId: string
-  villageId: string
   startDate: Date | string
   endDate: Date | string
   tasks: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutAssignmentsInput
+}
+
+export type AssignmentUncheckedCreateWithoutVillageInput = {
+  id?: string
+  userId: string
+  regionId: string
+  startDate: Date | string
+  endDate: Date | string
+  tasks: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type AssignmentCreateOrConnectWithoutVillageInput = {
+  where: Prisma.AssignmentWhereUniqueInput
+  create: Prisma.XOR<Prisma.AssignmentCreateWithoutVillageInput, Prisma.AssignmentUncheckedCreateWithoutVillageInput>
+}
+
+export type AssignmentCreateManyVillageInputEnvelope = {
+  data: Prisma.AssignmentCreateManyVillageInput | Prisma.AssignmentCreateManyVillageInput[]
+  skipDuplicates?: boolean
+}
+
+export type AssignmentUpsertWithWhereUniqueWithoutVillageInput = {
+  where: Prisma.AssignmentWhereUniqueInput
+  update: Prisma.XOR<Prisma.AssignmentUpdateWithoutVillageInput, Prisma.AssignmentUncheckedUpdateWithoutVillageInput>
+  create: Prisma.XOR<Prisma.AssignmentCreateWithoutVillageInput, Prisma.AssignmentUncheckedCreateWithoutVillageInput>
+}
+
+export type AssignmentUpdateWithWhereUniqueWithoutVillageInput = {
+  where: Prisma.AssignmentWhereUniqueInput
+  data: Prisma.XOR<Prisma.AssignmentUpdateWithoutVillageInput, Prisma.AssignmentUncheckedUpdateWithoutVillageInput>
+}
+
+export type AssignmentUpdateManyWithWhereWithoutVillageInput = {
+  where: Prisma.AssignmentScalarWhereInput
+  data: Prisma.XOR<Prisma.AssignmentUpdateManyMutationInput, Prisma.AssignmentUncheckedUpdateManyWithoutVillageInput>
+}
+
+export type AssignmentScalarWhereInput = {
+  AND?: Prisma.AssignmentScalarWhereInput | Prisma.AssignmentScalarWhereInput[]
+  OR?: Prisma.AssignmentScalarWhereInput[]
+  NOT?: Prisma.AssignmentScalarWhereInput | Prisma.AssignmentScalarWhereInput[]
+  id?: Prisma.StringFilter<"Assignment"> | string
+  userId?: Prisma.StringFilter<"Assignment"> | string
+  regionId?: Prisma.StringFilter<"Assignment"> | string
+  villageId?: Prisma.StringFilter<"Assignment"> | string
+  startDate?: Prisma.DateTimeFilter<"Assignment"> | Date | string
+  endDate?: Prisma.DateTimeFilter<"Assignment"> | Date | string
+  tasks?: Prisma.JsonFilter<"Assignment">
+  createdAt?: Prisma.DateTimeFilter<"Assignment"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Assignment"> | Date | string
+}
+
+export type AssignmentCreateWithoutUserInput = {
+  id?: string
+  regionId: string
+  startDate: Date | string
+  endDate: Date | string
+  tasks: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  village: Prisma.VillageCreateNestedOneWithoutAssignmentsInput
 }
 
 export type AssignmentUncheckedCreateWithoutUserInput = {
@@ -488,19 +595,48 @@ export type AssignmentUpdateManyWithWhereWithoutUserInput = {
   data: Prisma.XOR<Prisma.AssignmentUpdateManyMutationInput, Prisma.AssignmentUncheckedUpdateManyWithoutUserInput>
 }
 
-export type AssignmentScalarWhereInput = {
-  AND?: Prisma.AssignmentScalarWhereInput | Prisma.AssignmentScalarWhereInput[]
-  OR?: Prisma.AssignmentScalarWhereInput[]
-  NOT?: Prisma.AssignmentScalarWhereInput | Prisma.AssignmentScalarWhereInput[]
-  id?: Prisma.StringFilter<"Assignment"> | string
-  userId?: Prisma.StringFilter<"Assignment"> | string
-  regionId?: Prisma.StringFilter<"Assignment"> | string
-  villageId?: Prisma.StringFilter<"Assignment"> | string
-  startDate?: Prisma.DateTimeFilter<"Assignment"> | Date | string
-  endDate?: Prisma.DateTimeFilter<"Assignment"> | Date | string
-  tasks?: Prisma.JsonFilter<"Assignment">
-  createdAt?: Prisma.DateTimeFilter<"Assignment"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Assignment"> | Date | string
+export type AssignmentCreateManyVillageInput = {
+  id?: string
+  userId: string
+  regionId: string
+  startDate: Date | string
+  endDate: Date | string
+  tasks: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type AssignmentUpdateWithoutVillageInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  regionId?: Prisma.StringFieldUpdateOperationsInput | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutAssignmentsNestedInput
+}
+
+export type AssignmentUncheckedUpdateWithoutVillageInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  regionId?: Prisma.StringFieldUpdateOperationsInput | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type AssignmentUncheckedUpdateManyWithoutVillageInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  regionId?: Prisma.StringFieldUpdateOperationsInput | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AssignmentCreateManyUserInput = {
@@ -517,12 +653,12 @@ export type AssignmentCreateManyUserInput = {
 export type AssignmentUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   regionId?: Prisma.StringFieldUpdateOperationsInput | string
-  villageId?: Prisma.StringFieldUpdateOperationsInput | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tasks?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  village?: Prisma.VillageUpdateOneRequiredWithoutAssignmentsNestedInput
 }
 
 export type AssignmentUncheckedUpdateWithoutUserInput = {
@@ -560,6 +696,7 @@ export type AssignmentSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  village?: boolean | Prisma.VillageDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["assignment"]>
 
 export type AssignmentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -573,6 +710,7 @@ export type AssignmentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  village?: boolean | Prisma.VillageDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["assignment"]>
 
 export type AssignmentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -586,6 +724,7 @@ export type AssignmentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  village?: boolean | Prisma.VillageDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["assignment"]>
 
 export type AssignmentSelectScalar = {
@@ -603,18 +742,22 @@ export type AssignmentSelectScalar = {
 export type AssignmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "regionId" | "villageId" | "startDate" | "endDate" | "tasks" | "createdAt" | "updatedAt", ExtArgs["result"]["assignment"]>
 export type AssignmentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  village?: boolean | Prisma.VillageDefaultArgs<ExtArgs>
 }
 export type AssignmentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  village?: boolean | Prisma.VillageDefaultArgs<ExtArgs>
 }
 export type AssignmentIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  village?: boolean | Prisma.VillageDefaultArgs<ExtArgs>
 }
 
 export type $AssignmentPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Assignment"
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
+    village: Prisma.$VillagePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1021,6 +1164,7 @@ readonly fields: AssignmentFieldRefs;
 export interface Prisma__AssignmentClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  village<T extends Prisma.VillageDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.VillageDefaultArgs<ExtArgs>>): Prisma.Prisma__VillageClient<runtime.Types.Result.GetResult<Prisma.$VillagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

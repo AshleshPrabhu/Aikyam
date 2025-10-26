@@ -28,8 +28,8 @@ export * from "./enums.js"
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Vendors
- * const vendors = await prisma.vendor.findMany()
+ * // Fetch zero or more Regions
+ * const regions = await prisma.region.findMany()
  * ```
  * 
  * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
@@ -43,6 +43,16 @@ export { Prisma }
 path.join(__dirname, "query_engine-windows.dll.node")
 path.join(process.cwd(), "src/generated/query_engine-windows.dll.node")
 
+/**
+ * Model Region
+ * 
+ */
+export type Region = Prisma.RegionModel
+/**
+ * Model Village
+ * 
+ */
+export type Village = Prisma.VillageModel
 /**
  * Model Vendor
  * 

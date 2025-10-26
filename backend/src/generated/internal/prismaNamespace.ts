@@ -389,6 +389,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 
 export const ModelName = {
+  Region: 'Region',
+  Village: 'Village',
   Vendor: 'Vendor',
   User: 'User',
   Assignment: 'Assignment'
@@ -407,10 +409,158 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "vendor" | "user" | "assignment"
+    modelProps: "region" | "village" | "vendor" | "user" | "assignment"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
+    Region: {
+      payload: Prisma.$RegionPayload<ExtArgs>
+      fields: Prisma.RegionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RegionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RegionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegionPayload>
+        }
+        findFirst: {
+          args: Prisma.RegionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RegionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegionPayload>
+        }
+        findMany: {
+          args: Prisma.RegionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegionPayload>[]
+        }
+        create: {
+          args: Prisma.RegionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegionPayload>
+        }
+        createMany: {
+          args: Prisma.RegionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RegionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegionPayload>[]
+        }
+        delete: {
+          args: Prisma.RegionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegionPayload>
+        }
+        update: {
+          args: Prisma.RegionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegionPayload>
+        }
+        deleteMany: {
+          args: Prisma.RegionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RegionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RegionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegionPayload>[]
+        }
+        upsert: {
+          args: Prisma.RegionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegionPayload>
+        }
+        aggregate: {
+          args: Prisma.RegionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRegion>
+        }
+        groupBy: {
+          args: Prisma.RegionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RegionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RegionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RegionCountAggregateOutputType> | number
+        }
+      }
+    }
+    Village: {
+      payload: Prisma.$VillagePayload<ExtArgs>
+      fields: Prisma.VillageFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.VillageFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VillagePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.VillageFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VillagePayload>
+        }
+        findFirst: {
+          args: Prisma.VillageFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VillagePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.VillageFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VillagePayload>
+        }
+        findMany: {
+          args: Prisma.VillageFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VillagePayload>[]
+        }
+        create: {
+          args: Prisma.VillageCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VillagePayload>
+        }
+        createMany: {
+          args: Prisma.VillageCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.VillageCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VillagePayload>[]
+        }
+        delete: {
+          args: Prisma.VillageDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VillagePayload>
+        }
+        update: {
+          args: Prisma.VillageUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VillagePayload>
+        }
+        deleteMany: {
+          args: Prisma.VillageDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.VillageUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.VillageUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VillagePayload>[]
+        }
+        upsert: {
+          args: Prisma.VillageUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VillagePayload>
+        }
+        aggregate: {
+          args: Prisma.VillageAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateVillage>
+        }
+        groupBy: {
+          args: Prisma.VillageGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.VillageGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.VillageCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.VillageCountAggregateOutputType> | number
+        }
+      }
+    }
     Vendor: {
       payload: Prisma.$VendorPayload<ExtArgs>
       fields: Prisma.VendorFieldRefs
@@ -672,6 +822,27 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
+export const RegionScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RegionScalarFieldEnum = (typeof RegionScalarFieldEnum)[keyof typeof RegionScalarFieldEnum]
+
+
+export const VillageScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  regionId: 'regionId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type VillageScalarFieldEnum = (typeof VillageScalarFieldEnum)[keyof typeof VillageScalarFieldEnum]
+
+
 export const VendorScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -776,13 +947,6 @@ export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMod
 
 
 /**
- * Reference to a field of type 'Boolean'
- */
-export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-/**
  * Reference to a field of type 'DateTime'
  */
 export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -793,6 +957,13 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -910,6 +1081,8 @@ export interface PrismaClientOptions {
   omit?: GlobalOmitConfig
 }
 export type GlobalOmitConfig = {
+  region?: Prisma.RegionOmit
+  village?: Prisma.VillageOmit
   vendor?: Prisma.VendorOmit
   user?: Prisma.UserOmit
   assignment?: Prisma.AssignmentOmit

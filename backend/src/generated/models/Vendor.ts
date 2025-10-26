@@ -217,6 +217,7 @@ export type VendorWhereInput = {
   isStay?: Prisma.BoolFilter<"Vendor"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Vendor"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Vendor"> | Date | string
+  village?: Prisma.XOR<Prisma.VillageScalarRelationFilter, Prisma.VillageWhereInput>
 }
 
 export type VendorOrderByWithRelationInput = {
@@ -230,6 +231,7 @@ export type VendorOrderByWithRelationInput = {
   isStay?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  village?: Prisma.VillageOrderByWithRelationInput
 }
 
 export type VendorWhereUniqueInput = Prisma.AtLeast<{
@@ -246,6 +248,7 @@ export type VendorWhereUniqueInput = Prisma.AtLeast<{
   isStay?: Prisma.BoolFilter<"Vendor"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Vendor"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Vendor"> | Date | string
+  village?: Prisma.XOR<Prisma.VillageScalarRelationFilter, Prisma.VillageWhereInput>
 }, "id" | "phone">
 
 export type VendorOrderByWithAggregationInput = {
@@ -284,13 +287,13 @@ export type VendorCreateInput = {
   id?: string
   name: string
   regionId: string
-  villageId: string
   categories?: Prisma.VendorCreatecategoriesInput | string[]
   summary?: string | null
   phone: string
   isStay?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  village: Prisma.VillageCreateNestedOneWithoutVendorsInput
 }
 
 export type VendorUncheckedCreateInput = {
@@ -310,13 +313,13 @@ export type VendorUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   regionId?: Prisma.StringFieldUpdateOperationsInput | string
-  villageId?: Prisma.StringFieldUpdateOperationsInput | string
   categories?: Prisma.VendorUpdatecategoriesInput | string[]
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   isStay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  village?: Prisma.VillageUpdateOneRequiredWithoutVendorsNestedInput
 }
 
 export type VendorUncheckedUpdateInput = {
@@ -349,7 +352,6 @@ export type VendorUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   regionId?: Prisma.StringFieldUpdateOperationsInput | string
-  villageId?: Prisma.StringFieldUpdateOperationsInput | string
   categories?: Prisma.VendorUpdatecategoriesInput | string[]
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -369,6 +371,16 @@ export type VendorUncheckedUpdateManyInput = {
   isStay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type VendorListRelationFilter = {
+  every?: Prisma.VendorWhereInput
+  some?: Prisma.VendorWhereInput
+  none?: Prisma.VendorWhereInput
+}
+
+export type VendorOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type StringNullableListFilter<$PrismaModel = never> = {
@@ -416,12 +428,50 @@ export type VendorMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
-export type VendorCreatecategoriesInput = {
-  set: string[]
+export type VendorCreateNestedManyWithoutVillageInput = {
+  create?: Prisma.XOR<Prisma.VendorCreateWithoutVillageInput, Prisma.VendorUncheckedCreateWithoutVillageInput> | Prisma.VendorCreateWithoutVillageInput[] | Prisma.VendorUncheckedCreateWithoutVillageInput[]
+  connectOrCreate?: Prisma.VendorCreateOrConnectWithoutVillageInput | Prisma.VendorCreateOrConnectWithoutVillageInput[]
+  createMany?: Prisma.VendorCreateManyVillageInputEnvelope
+  connect?: Prisma.VendorWhereUniqueInput | Prisma.VendorWhereUniqueInput[]
 }
 
-export type StringFieldUpdateOperationsInput = {
-  set?: string
+export type VendorUncheckedCreateNestedManyWithoutVillageInput = {
+  create?: Prisma.XOR<Prisma.VendorCreateWithoutVillageInput, Prisma.VendorUncheckedCreateWithoutVillageInput> | Prisma.VendorCreateWithoutVillageInput[] | Prisma.VendorUncheckedCreateWithoutVillageInput[]
+  connectOrCreate?: Prisma.VendorCreateOrConnectWithoutVillageInput | Prisma.VendorCreateOrConnectWithoutVillageInput[]
+  createMany?: Prisma.VendorCreateManyVillageInputEnvelope
+  connect?: Prisma.VendorWhereUniqueInput | Prisma.VendorWhereUniqueInput[]
+}
+
+export type VendorUpdateManyWithoutVillageNestedInput = {
+  create?: Prisma.XOR<Prisma.VendorCreateWithoutVillageInput, Prisma.VendorUncheckedCreateWithoutVillageInput> | Prisma.VendorCreateWithoutVillageInput[] | Prisma.VendorUncheckedCreateWithoutVillageInput[]
+  connectOrCreate?: Prisma.VendorCreateOrConnectWithoutVillageInput | Prisma.VendorCreateOrConnectWithoutVillageInput[]
+  upsert?: Prisma.VendorUpsertWithWhereUniqueWithoutVillageInput | Prisma.VendorUpsertWithWhereUniqueWithoutVillageInput[]
+  createMany?: Prisma.VendorCreateManyVillageInputEnvelope
+  set?: Prisma.VendorWhereUniqueInput | Prisma.VendorWhereUniqueInput[]
+  disconnect?: Prisma.VendorWhereUniqueInput | Prisma.VendorWhereUniqueInput[]
+  delete?: Prisma.VendorWhereUniqueInput | Prisma.VendorWhereUniqueInput[]
+  connect?: Prisma.VendorWhereUniqueInput | Prisma.VendorWhereUniqueInput[]
+  update?: Prisma.VendorUpdateWithWhereUniqueWithoutVillageInput | Prisma.VendorUpdateWithWhereUniqueWithoutVillageInput[]
+  updateMany?: Prisma.VendorUpdateManyWithWhereWithoutVillageInput | Prisma.VendorUpdateManyWithWhereWithoutVillageInput[]
+  deleteMany?: Prisma.VendorScalarWhereInput | Prisma.VendorScalarWhereInput[]
+}
+
+export type VendorUncheckedUpdateManyWithoutVillageNestedInput = {
+  create?: Prisma.XOR<Prisma.VendorCreateWithoutVillageInput, Prisma.VendorUncheckedCreateWithoutVillageInput> | Prisma.VendorCreateWithoutVillageInput[] | Prisma.VendorUncheckedCreateWithoutVillageInput[]
+  connectOrCreate?: Prisma.VendorCreateOrConnectWithoutVillageInput | Prisma.VendorCreateOrConnectWithoutVillageInput[]
+  upsert?: Prisma.VendorUpsertWithWhereUniqueWithoutVillageInput | Prisma.VendorUpsertWithWhereUniqueWithoutVillageInput[]
+  createMany?: Prisma.VendorCreateManyVillageInputEnvelope
+  set?: Prisma.VendorWhereUniqueInput | Prisma.VendorWhereUniqueInput[]
+  disconnect?: Prisma.VendorWhereUniqueInput | Prisma.VendorWhereUniqueInput[]
+  delete?: Prisma.VendorWhereUniqueInput | Prisma.VendorWhereUniqueInput[]
+  connect?: Prisma.VendorWhereUniqueInput | Prisma.VendorWhereUniqueInput[]
+  update?: Prisma.VendorUpdateWithWhereUniqueWithoutVillageInput | Prisma.VendorUpdateWithWhereUniqueWithoutVillageInput[]
+  updateMany?: Prisma.VendorUpdateManyWithWhereWithoutVillageInput | Prisma.VendorUpdateManyWithWhereWithoutVillageInput[]
+  deleteMany?: Prisma.VendorScalarWhereInput | Prisma.VendorScalarWhereInput[]
+}
+
+export type VendorCreatecategoriesInput = {
+  set: string[]
 }
 
 export type VendorUpdatecategoriesInput = {
@@ -437,8 +487,118 @@ export type BoolFieldUpdateOperationsInput = {
   set?: boolean
 }
 
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
+export type VendorCreateWithoutVillageInput = {
+  id?: string
+  name: string
+  regionId: string
+  categories?: Prisma.VendorCreatecategoriesInput | string[]
+  summary?: string | null
+  phone: string
+  isStay?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type VendorUncheckedCreateWithoutVillageInput = {
+  id?: string
+  name: string
+  regionId: string
+  categories?: Prisma.VendorCreatecategoriesInput | string[]
+  summary?: string | null
+  phone: string
+  isStay?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type VendorCreateOrConnectWithoutVillageInput = {
+  where: Prisma.VendorWhereUniqueInput
+  create: Prisma.XOR<Prisma.VendorCreateWithoutVillageInput, Prisma.VendorUncheckedCreateWithoutVillageInput>
+}
+
+export type VendorCreateManyVillageInputEnvelope = {
+  data: Prisma.VendorCreateManyVillageInput | Prisma.VendorCreateManyVillageInput[]
+  skipDuplicates?: boolean
+}
+
+export type VendorUpsertWithWhereUniqueWithoutVillageInput = {
+  where: Prisma.VendorWhereUniqueInput
+  update: Prisma.XOR<Prisma.VendorUpdateWithoutVillageInput, Prisma.VendorUncheckedUpdateWithoutVillageInput>
+  create: Prisma.XOR<Prisma.VendorCreateWithoutVillageInput, Prisma.VendorUncheckedCreateWithoutVillageInput>
+}
+
+export type VendorUpdateWithWhereUniqueWithoutVillageInput = {
+  where: Prisma.VendorWhereUniqueInput
+  data: Prisma.XOR<Prisma.VendorUpdateWithoutVillageInput, Prisma.VendorUncheckedUpdateWithoutVillageInput>
+}
+
+export type VendorUpdateManyWithWhereWithoutVillageInput = {
+  where: Prisma.VendorScalarWhereInput
+  data: Prisma.XOR<Prisma.VendorUpdateManyMutationInput, Prisma.VendorUncheckedUpdateManyWithoutVillageInput>
+}
+
+export type VendorScalarWhereInput = {
+  AND?: Prisma.VendorScalarWhereInput | Prisma.VendorScalarWhereInput[]
+  OR?: Prisma.VendorScalarWhereInput[]
+  NOT?: Prisma.VendorScalarWhereInput | Prisma.VendorScalarWhereInput[]
+  id?: Prisma.StringFilter<"Vendor"> | string
+  name?: Prisma.StringFilter<"Vendor"> | string
+  regionId?: Prisma.StringFilter<"Vendor"> | string
+  villageId?: Prisma.StringFilter<"Vendor"> | string
+  categories?: Prisma.StringNullableListFilter<"Vendor">
+  summary?: Prisma.StringNullableFilter<"Vendor"> | string | null
+  phone?: Prisma.StringFilter<"Vendor"> | string
+  isStay?: Prisma.BoolFilter<"Vendor"> | boolean
+  createdAt?: Prisma.DateTimeFilter<"Vendor"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Vendor"> | Date | string
+}
+
+export type VendorCreateManyVillageInput = {
+  id?: string
+  name: string
+  regionId: string
+  categories?: Prisma.VendorCreatecategoriesInput | string[]
+  summary?: string | null
+  phone: string
+  isStay?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type VendorUpdateWithoutVillageInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  regionId?: Prisma.StringFieldUpdateOperationsInput | string
+  categories?: Prisma.VendorUpdatecategoriesInput | string[]
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  isStay?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type VendorUncheckedUpdateWithoutVillageInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  regionId?: Prisma.StringFieldUpdateOperationsInput | string
+  categories?: Prisma.VendorUpdatecategoriesInput | string[]
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  isStay?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type VendorUncheckedUpdateManyWithoutVillageInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  regionId?: Prisma.StringFieldUpdateOperationsInput | string
+  categories?: Prisma.VendorUpdatecategoriesInput | string[]
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  isStay?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -454,6 +614,7 @@ export type VendorSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   isStay?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  village?: boolean | Prisma.VillageDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["vendor"]>
 
 export type VendorSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -467,6 +628,7 @@ export type VendorSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   isStay?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  village?: boolean | Prisma.VillageDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["vendor"]>
 
 export type VendorSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -480,6 +642,7 @@ export type VendorSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   isStay?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  village?: boolean | Prisma.VillageDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["vendor"]>
 
 export type VendorSelectScalar = {
@@ -496,10 +659,21 @@ export type VendorSelectScalar = {
 }
 
 export type VendorOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "regionId" | "villageId" | "categories" | "summary" | "phone" | "isStay" | "createdAt" | "updatedAt", ExtArgs["result"]["vendor"]>
+export type VendorInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  village?: boolean | Prisma.VillageDefaultArgs<ExtArgs>
+}
+export type VendorIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  village?: boolean | Prisma.VillageDefaultArgs<ExtArgs>
+}
+export type VendorIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  village?: boolean | Prisma.VillageDefaultArgs<ExtArgs>
+}
 
 export type $VendorPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Vendor"
-  objects: {}
+  objects: {
+    village: Prisma.$VillagePayload<ExtArgs>
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
@@ -905,6 +1079,7 @@ readonly fields: VendorFieldRefs;
  */
 export interface Prisma__VendorClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  village<T extends Prisma.VillageDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.VillageDefaultArgs<ExtArgs>>): Prisma.Prisma__VillageClient<runtime.Types.Result.GetResult<Prisma.$VillagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -961,6 +1136,10 @@ export type VendorFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Intern
    */
   omit?: Prisma.VendorOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.VendorInclude<ExtArgs> | null
+  /**
    * Filter, which Vendor to fetch.
    */
   where: Prisma.VendorWhereUniqueInput
@@ -979,6 +1158,10 @@ export type VendorFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions
    */
   omit?: Prisma.VendorOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.VendorInclude<ExtArgs> | null
+  /**
    * Filter, which Vendor to fetch.
    */
   where: Prisma.VendorWhereUniqueInput
@@ -996,6 +1179,10 @@ export type VendorFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Omit specific fields from the Vendor
    */
   omit?: Prisma.VendorOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.VendorInclude<ExtArgs> | null
   /**
    * Filter, which Vendor to fetch.
    */
@@ -1045,6 +1232,10 @@ export type VendorFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.
    */
   omit?: Prisma.VendorOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.VendorInclude<ExtArgs> | null
+  /**
    * Filter, which Vendor to fetch.
    */
   where?: Prisma.VendorWhereInput
@@ -1093,6 +1284,10 @@ export type VendorFindManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    */
   omit?: Prisma.VendorOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.VendorInclude<ExtArgs> | null
+  /**
    * Filter, which Vendors to fetch.
    */
   where?: Prisma.VendorWhereInput
@@ -1136,6 +1331,10 @@ export type VendorCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    */
   omit?: Prisma.VendorOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.VendorInclude<ExtArgs> | null
+  /**
    * The data needed to create a Vendor.
    */
   data: Prisma.XOR<Prisma.VendorCreateInput, Prisma.VendorUncheckedCreateInput>
@@ -1169,6 +1368,10 @@ export type VendorCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensio
    */
   data: Prisma.VendorCreateManyInput | Prisma.VendorCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.VendorIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1183,6 +1386,10 @@ export type VendorUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    * Omit specific fields from the Vendor
    */
   omit?: Prisma.VendorOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.VendorInclude<ExtArgs> | null
   /**
    * The data needed to update a Vendor.
    */
@@ -1235,6 +1442,10 @@ export type VendorUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensio
    * Limit how many Vendors to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.VendorIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1249,6 +1460,10 @@ export type VendorUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    * Omit specific fields from the Vendor
    */
   omit?: Prisma.VendorOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.VendorInclude<ExtArgs> | null
   /**
    * The filter to search for the Vendor to update in case it exists.
    */
@@ -1275,6 +1490,10 @@ export type VendorDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    * Omit specific fields from the Vendor
    */
   omit?: Prisma.VendorOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.VendorInclude<ExtArgs> | null
   /**
    * Filter which Vendor to delete.
    */
@@ -1307,4 +1526,8 @@ export type VendorDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Omit specific fields from the Vendor
    */
   omit?: Prisma.VendorOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.VendorInclude<ExtArgs> | null
 }

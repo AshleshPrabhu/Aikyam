@@ -1,5 +1,18 @@
-import express from "express";
-import { getVillages } from "../controllers/villageController.js";
+import express from 'express';
+import {
+  createVillage,
+  getAllVillages,
+  getVillageById,
+  updateVillage,
+  deleteVillage,
+} from '../controllers/villageController.js';
+
 const router = express.Router();
-router.get("/:regionId", getVillages);
+
+router.post('/', createVillage);
+router.get('/', getAllVillages);
+router.get('/:id', getVillageById);
+router.put('/:id', updateVillage);
+router.delete('/:id', deleteVillage);
+
 export default router;

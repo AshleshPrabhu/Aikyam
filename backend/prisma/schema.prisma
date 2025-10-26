@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client"
   output   = "../src/generated" 
@@ -9,40 +8,69 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
+model Region {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  villages  Village[]
+}
+
+
+model Village {
+  id        String    @id @default(cuid())
+  name      String
+  regionId  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  region    Region    @relation(fields: [regionId], references: [id])
+  vendors   Vendor[]
+  assignments Assignment[]
+
+  @@unique([name, regionId]) 
+}
+
+
 model Vendor {
-  id         String   @id @default(cuid())
-  name       String
-  regionId   String
-  villageId  String
-  categories String[]
-  summary    String?
-  phone      String   @unique
-  isStay     Boolean  @default(false)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id          String    @id @default(cuid())
+  name        String
+  regionId    String
+  villageId   String
+  categories  String[]  
+  summary     String?
+  phone       String     @unique
+  isStay      Boolean    @default(false)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+    village     Village    @relation(fields: [villageId], references: [id])
 }
 
 model User {
-  id        String   @id @default(cuid())
-  name      String
-  email     String   @unique
-  phone     String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String       @id @default(cuid())
+  name        String
+  email       String        @unique
+  phone       String        @unique
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
 
   assignments Assignment[]
 }
 
 model Assignment {
-  id          String   @id @default(cuid())
+  id          String     @id @default(cuid())
   userId      String
-  regionId    String   
-  villageId   String   
+  regionId    String
+  villageId   String
   startDate   DateTime
   endDate     DateTime
   tasks       Json
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
 
-  user User @relation(fields: [userId], references: [id])
+  user        User       @relation(fields: [userId], references: [id])
+  village     Village    @relation(fields: [villageId], references: [id])
 }

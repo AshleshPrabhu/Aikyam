@@ -48,6 +48,8 @@ export const AnyNull = runtime.objectEnumValues.instances.AnyNull
 
 
 export const ModelName = {
+  Region: 'Region',
+  Village: 'Village',
   Vendor: 'Vendor',
   User: 'User',
   Assignment: 'Assignment'
@@ -67,6 +69,27 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 } as const)
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
+
+
+export const RegionScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RegionScalarFieldEnum = (typeof RegionScalarFieldEnum)[keyof typeof RegionScalarFieldEnum]
+
+
+export const VillageScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  regionId: 'regionId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type VillageScalarFieldEnum = (typeof VillageScalarFieldEnum)[keyof typeof VillageScalarFieldEnum]
 
 
 export const VendorScalarFieldEnum = {

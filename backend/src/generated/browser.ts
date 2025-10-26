@@ -17,6 +17,16 @@ export { Prisma }
 export * as $Enums from './enums.js'
 export * from './enums.js';
 /**
+ * Model Region
+ * 
+ */
+export type Region = Prisma.RegionModel
+/**
+ * Model Village
+ * 
+ */
+export type Village = Prisma.VillageModel
+/**
  * Model Vendor
  * 
  */
